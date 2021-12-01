@@ -18,6 +18,8 @@ public class BeeBehavior : MonoBehaviour
     {
         // Bee is at hive
         agent = GetComponent<NavMeshAgent>();
+        agent.speed = 1;
+        Debug.Log(agent.isOnNavMesh);
 
         foundFlower = false;
         isExploring = true;
@@ -38,6 +40,7 @@ public class BeeBehavior : MonoBehaviour
     {
         // Go to target
         if (currentTarget != null && !atTarget) {
+            Debug.Log("Has a Target");
             agent.SetDestination(currentTarget.transform.position);
         }
         // Slurp nectar from currentFlower (AKA currentTarget)
@@ -69,7 +72,8 @@ public class BeeBehavior : MonoBehaviour
 
         // Impliment:
         // isExploring pathfinding
-        if(isExploring && !atTarget){
+        if(isExploring){
+            Debug.Log("Should be exploring");
             agent.SetDestination(transform.position+transform.forward);
             if(rotateChance < 0.1f){
                 Debug.Log("Rotated");
@@ -120,11 +124,18 @@ public class BeeBehavior : MonoBehaviour
     // Called by Hive
     // Pre:  none
     // Post: returns nectar in inventory
-    // Hive doesnt need agency function is depreciated
+    // Hive doesnt need agency, function is depreciated
     public float dropOffNectar() {
         float temp = nectar;
         nectar = 0;
         return temp;
+    }
+
+    public void foundFlowerFunc(GameObject flower){
+        //Debug.Log("foundFlowerFunc was called");
+        foundFlower = true;
+        currentFlower = flower;
+        currentTarget = flower;
     }
 
     private void OnCollision(Collision other) {

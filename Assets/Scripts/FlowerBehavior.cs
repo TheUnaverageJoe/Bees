@@ -61,8 +61,8 @@ public class FlowerBehavior : MonoBehaviour
             //Debug.Log(suckNectar());
             //Debug.Log(Nectar);
             //send signal to bee
-            // beeScript = other.gameObject.GetComponent<beeScript>();
-            // beeScript.foundFlowerFunc(transform.position);
+             beeScript = other.gameObject.GetComponent<BeeBehavior>();
+             beeScript.foundFlowerFunc(gameObject);
             //beeScript.sendSignal(found_a_Flower);
         }
     }
