@@ -9,7 +9,7 @@ public class HiveBehavior : MonoBehaviour
     public float Nectar;
     public GameObject bee;
     private GameObject[] Bees;
-    private Queue<GameObject> BeeQueue;
+    public Queue<GameObject> BeeQueue;
     public int totalBees;
     public float requiredNectar;
     public int enemyHealth;
