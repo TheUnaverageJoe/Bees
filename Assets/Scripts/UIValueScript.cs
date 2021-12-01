@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UIValueScript : MonoBehaviour
 {
+    /*
     public int totalValue = 0;
     private GameObject slider;
     private GameObject hive;
@@ -23,4 +24,5 @@ public class UIValueScript : MonoBehaviour
         queueLength = hiveScript.BeeQueue.Count;
         totalValue = sliderValue * queueLength;
     }
+    */
 }
