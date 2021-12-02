@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIValueScript : MonoBehaviour
 {
-    /*
+    
     public int totalValue = 0;
     private GameObject slider;
     private GameObject hive;
@@ -20,9 +20,9 @@ public class UIValueScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        sliderValue = slider.GetComponent <Slider>().value;
-        queueLength = hiveScript.BeeQueue.Count;
-        totalValue = sliderValue * queueLength;
+        //sliderValue = slider.GetComponent <Slider>().value;
+        //queueLength = hiveScript.BeeQueue.Count;
+        //totalValue = sliderValue * queueLength;
     }
-    */
+    
 }
