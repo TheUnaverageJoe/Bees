@@ -79,7 +79,7 @@ public class HiveBehavior : MonoBehaviour
     // Post: bool : whether or not command executed properly
     //       true if command executed
     //       return false if no bees in hive
-    bool deployNBees(int n) {
+    public bool deployNBees(int n) {
         if (BeeQueue.Count == 0 || BeeQueue.Count < n) return false;
         for (int i = 0; i < n; i++) {
             bee = BeeQueue.Dequeue();
