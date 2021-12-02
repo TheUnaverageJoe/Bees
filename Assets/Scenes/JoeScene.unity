@@ -21849,6 +21849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800b72b32f7890e4492f3d41db0e4241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Nectar: 0
   bee: {fileID: 0}
   totalBees: 0
   requiredNectar: 0
@@ -26339,6 +26340,8 @@ MonoBehaviour:
   goingHome: 0
   atTarget: 0
   nectar: 0
+  rotateChance: 0
+  rotateAmount: 0
 --- !u!23 &1974902506
 MeshRenderer:
   m_ObjectHideFlags: 0
