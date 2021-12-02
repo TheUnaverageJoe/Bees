@@ -28,9 +28,6 @@ public class BeeBehavior : MonoBehaviour
 
         nectar = 0;
 
-        rotateChance = Random.Range(0.0f, 10.0f);
-        rotateAmount = Random.Range(-5.0f, 20.0f);
-
         currentTarget = null;
         hive = GameObject.FindGameObjectWithTag("Hive");
     }
@@ -38,15 +35,20 @@ public class BeeBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        rotateChance = Random.Range(0.0f, 10.0f);
+        rotateAmount = Random.Range(-20.0f, 20.0f);
+
         // Go to target
         if (currentTarget != null && !atTarget) {
-            Debug.Log("Has a Target");
+
+            Debug.Log("Has a Target" + currentTarget.transform.position + GetInstanceID());
             agent.SetDestination(currentTarget.transform.position);
         }
         // Slurp nectar from currentFlower (AKA currentTarget)
         if (atTarget && currentTarget.CompareTag("Flower") && nectar < MAX_NECTAR) {
             if (currentTarget.GetComponent<FlowerBehavior>().suckNectar()) {
                 nectar++;
+                Debug.Log("Nectar is: " + nectar);
             } else {
                 isExploring = true;
                 foundFlower = false;
@@ -75,7 +77,7 @@ public class BeeBehavior : MonoBehaviour
         if(isExploring){
             Debug.Log("Should be exploring");
             agent.SetDestination(transform.position+transform.forward);
-            if(rotateChance < 0.1f){
+            if(rotateChance < 0.05f){
                 Debug.Log("Rotated");
                 transform.RotateAround(transform.position, Vector3.up, rotateAmount);
             }
@@ -134,11 +136,13 @@ public class BeeBehavior : MonoBehaviour
     public void foundFlowerFunc(GameObject flower){
         //Debug.Log("foundFlowerFunc was called");
         foundFlower = true;
+        isExploring = false;
         currentFlower = flower;
         currentTarget = flower;
     }
 
-    private void OnCollision(Collision other) {
+    private void OnCollisionEnter(Collision other) {
+        Debug.Log("Bee hit something physically");
         if (other.gameObject.CompareTag("Hive")) {
             goingHome = false;
             atTarget = true;

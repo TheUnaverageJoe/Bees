@@ -25,7 +25,7 @@ public class HiveBehavior : MonoBehaviour
         Nectar = 0;
         enemyHealth = 5;
 
-        totalBees = 10;
+        totalBees = 100;
         requiredNectar = 20;
         createdBeesCounter = 0;
 
@@ -121,7 +121,13 @@ public class HiveBehavior : MonoBehaviour
     GameObject createBee() {
     //ref GameObject createBee() {
         // Create clone GameObject and include into queue of bees in hive
-        GameObject clone = Instantiate(bee, transform.position + transform.forward * 2, Quaternion.identity);
+        Quaternion rotation = Quaternion.AngleAxis(Random.Range(-90f, 90f), Vector3.up);
+        Vector3 newPosition = new Vector3(
+            transform.position.x + Random.Range(-2f, 2f),
+            transform.position.y,
+            transform.position.z + Random.Range(-2f, 2f));
+
+        GameObject clone = Instantiate(bee, newPosition, rotation);
         //ref GameObject toReturn = ref clone;
 
         // Set initial state

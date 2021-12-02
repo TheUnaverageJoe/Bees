@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5621221976228588006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.96, y: 0.35, z: -3.83}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Nectar: 0
-  bee: {fileID: 0}
+  bee: {fileID: 4805415210957980398, guid: 8e983087f9198044a90ee6bbb5c1972f, type: 3}
   totalBees: 0
   requiredNectar: 0
   enemyHealth: 0

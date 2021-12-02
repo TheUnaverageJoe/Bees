@@ -8,8 +8,8 @@ public class FlowerBehavior : MonoBehaviour
     // bool to maintain if flower is depleted
     // change the state of collider based on depleted or not
     // timer for replenish Nectar
-    private int Nectar;
-    private bool depleted;
+    public int Nectar;
+    private bool depleted, hasBee;
     SphereCollider objCollider;
     int replenishTime;
     float timer = 0;
@@ -20,10 +20,12 @@ public class FlowerBehavior : MonoBehaviour
     void Start()
     {
         // consider frame rate and how fast bee consumes 1 nectar
-        Nectar = Random.Range(1, 5);//amount of nectar
+        //Nectar = Random.Range(1, 5);//amount of nectar
+        Nectar = 5;
         replenishTime = Random.Range(1, 3);//num of minutes till replenish
         objCollider = GetComponent<SphereCollider>();
         timer = 0;
+        hasBee = false;
     }
 
     // Update is called once per frame
@@ -32,7 +34,7 @@ public class FlowerBehavior : MonoBehaviour
         //Flower has no nectar left
         //disable its collider because its inactive
         //start incrementing timer
-        if(depleted){
+        if(Nectar<=0){
             objCollider.enabled = false;
             timer += Time.deltaTime;
         }
@@ -42,10 +44,13 @@ public class FlowerBehavior : MonoBehaviour
         if(timer >= replenishTime*60){
             objCollider.enabled = true;
             depleted = false;
+            hasBee = false;
             Nectar = Random.Range(1, 5);
             timer = 0;
         }
     }
+    //in suckNectar set hasBee to false if a bee is
+    //allowed to leave a flower before flower is empty
     public bool suckNectar() {
         if (Nectar <= 0) {
             depleted = true;
@@ -56,10 +61,11 @@ public class FlowerBehavior : MonoBehaviour
         }
     }
     private void OnTriggerEnter(Collider other){
-        if(other.gameObject.CompareTag("Bee")){
+        if(other.gameObject.CompareTag("Bee") && !hasBee){
             Debug.Log("Trigger went off");
+            hasBee = true;
             //Debug.Log(suckNectar());
-            //Debug.Log(Nectar);
+            Debug.Log(Nectar);
             //send signal to bee
              beeScript = other.gameObject.GetComponent<BeeBehavior>();
              beeScript.foundFlowerFunc(gameObject);
