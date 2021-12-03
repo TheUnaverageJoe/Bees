@@ -19,7 +19,7 @@ public class BeeBehavior : MonoBehaviour
         // Bee is at hive
         agent = GetComponent<NavMeshAgent>();
         agent.speed = 1;
-        Debug.Log(agent.isOnNavMesh);
+        //Debug.Log(agent.isOnNavMesh);
 
         foundFlower = false;
         isExploring = true;
@@ -78,7 +78,7 @@ public class BeeBehavior : MonoBehaviour
             //Debug.Log("Should be exploring");
             agent.SetDestination(transform.position+transform.forward);
             if(rotateChance < 0.05f){
-                Debug.Log("Rotated");
+                //Debug.Log("Rotated");
                 transform.RotateAround(transform.position, Vector3.up, rotateAmount);
             }
         }
@@ -136,6 +136,8 @@ public class BeeBehavior : MonoBehaviour
     public void foundFlowerFunc(GameObject flower){
         //Debug.Log("foundFlowerFunc was called");
         foundFlower = true;
+        goingHome = false;
+        atTarget = false;
         isExploring = false;
         currentFlower = flower;
         currentTarget = flower;
@@ -145,18 +147,18 @@ public class BeeBehavior : MonoBehaviour
         Debug.Log("Bee hit something physically");
         if (other.gameObject.CompareTag("Hive") && currentTarget == hive) {
             Debug.Log("Touched hive");
-            GameObject child = transform.GetChild(0).gameObject;
-            child.SetActive(false);
+            //GameObject child = transform.GetChild(0).gameObject;
+            //child.SetActive(false);
             gameObject.SetActive(false);
             goingHome = false;
             atTarget = true;
         }
         if (other.gameObject.CompareTag("Flower")) {
-            isExploring = false;
-            foundFlower = true;
+            //isExploring = false;
+            foundFlower = false;
             atTarget = true;
-            currentTarget = other.gameObject;
-            currentFlower = other.gameObject;
+            //currentTarget = other.gameObject;
+            //currentFlower = other.gameObject;
         }
     }
 }

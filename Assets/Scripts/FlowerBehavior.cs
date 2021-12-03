@@ -65,7 +65,7 @@ public class FlowerBehavior : MonoBehaviour
             Debug.Log("Trigger went off");
             hasBee = true;
             //Debug.Log(suckNectar());
-            Debug.Log(Nectar);
+            //Debug.Log(Nectar);
             //send signal to bee
              beeScript = other.gameObject.GetComponent<BeeBehavior>();
              beeScript.foundFlowerFunc(gameObject);
