@@ -41,14 +41,14 @@ public class BeeBehavior : MonoBehaviour
         // Go to target
         if (currentTarget != null && !atTarget) {
 
-            Debug.Log("Has a Target" + currentTarget.transform.position + GetInstanceID());
+            //Debug.Log("Has a Target" + currentTarget.transform.position + GetInstanceID());
             agent.SetDestination(currentTarget.transform.position);
         }
         // Slurp nectar from currentFlower (AKA currentTarget)
         if (atTarget && currentTarget.CompareTag("Flower") && nectar < MAX_NECTAR) {
             if (currentTarget.GetComponent<FlowerBehavior>().suckNectar()) {
                 nectar++;
-                Debug.Log("Nectar is: " + nectar);
+                //Debug.Log("Nectar is: " + nectar);
             } else {
                 isExploring = true;
                 foundFlower = false;
@@ -75,7 +75,7 @@ public class BeeBehavior : MonoBehaviour
         // Impliment:
         // isExploring pathfinding
         if(isExploring){
-            Debug.Log("Should be exploring");
+            //Debug.Log("Should be exploring");
             agent.SetDestination(transform.position+transform.forward);
             if(rotateChance < 0.05f){
                 Debug.Log("Rotated");
@@ -143,7 +143,11 @@ public class BeeBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         Debug.Log("Bee hit something physically");
-        if (other.gameObject.CompareTag("Hive")) {
+        if (other.gameObject.CompareTag("Hive") && currentTarget == hive) {
+            Debug.Log("Touched hive");
+            GameObject child = transform.GetChild(0).gameObject;
+            child.SetActive(false);
+            gameObject.SetActive(false);
             goingHome = false;
             atTarget = true;
         }

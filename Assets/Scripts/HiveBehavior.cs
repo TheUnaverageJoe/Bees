@@ -25,7 +25,7 @@ public class HiveBehavior : MonoBehaviour
         Nectar = 0;
         enemyHealth = 5;
 
-        totalBees = 100;
+        totalBees = 10;
         requiredNectar = 20;
         createdBeesCounter = 0;
 
@@ -71,7 +71,7 @@ public class HiveBehavior : MonoBehaviour
         //If bees in hive produce honey?
         //for each bee increase rate of nectar to honey conversion
         //if(BeeQueue.)
-        if (Nectar >= 0 && BeeQueue.Count > 0) {
+        if (Nectar >= BeeQueue.Count && BeeQueue.Count > 0) {
             Nectar -= BeeQueue.Count;
         }
         // From research: it requires nectar from 2 million flowers for
@@ -136,10 +136,10 @@ public class HiveBehavior : MonoBehaviour
         //return ref clone;
     }
 
-    private void OnCollision(GameObject other) {
+    private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Bee")) {
-            Nectar += other.GetComponent<BeeBehavior>().dropOffNectar();
-            BeeQueue.Enqueue(other);
+            Nectar += other.gameObject.GetComponent<BeeBehavior>().dropOffNectar();
+            BeeQueue.Enqueue(other.gameObject);
         }
     }
 }
