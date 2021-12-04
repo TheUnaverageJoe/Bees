@@ -115,7 +115,7 @@ public class HiveBehavior : MonoBehaviour
 
     // produceBee()
     // Based on a max amount of nectar, create a new bee in the hive
-    bool produceBee() {
+    public bool produceBee() {
         if (Nectar < REQUIRED_NECTAR_FOR_BEE || Honey < 1) return false;
         storedBees += 1;
         Nectar -= REQUIRED_NECTAR_FOR_BEE;
@@ -127,7 +127,7 @@ public class HiveBehavior : MonoBehaviour
     // createBee()
     // Add new bee clone to BeeQueue
     //NEED to return by reference so the attached scripts have a gameobject to access?
-    GameObject createBee() {
+    public GameObject createBee() {
     //ref GameObject createBee() {
         // Create clone GameObject and include into queue of bees in hive
         Quaternion rotation = Quaternion.AngleAxis(Random.Range(-90f, 90f), Vector3.up);

@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class ButtonFunctionScript : MonoBehaviour
 {
-    private GameObject hive;
-    private HiveBehavior hiveScript;
-    private GameObject slider;
+    public GameObject hive;
+    public HiveBehavior hiveScript;
+    public GameObject slider;
     // Start is called before the first frame update
     void Start()
     {
-        hive = GameObject.Find ("Hive");
+        hive = GameObject.Find ("PolyHive (1)");
         hiveScript = hive.GetComponent <HiveBehavior>();
         slider = GameObject.Find ("UISlider");
     }
