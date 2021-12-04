@@ -97,11 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800b72b32f7890e4492f3d41db0e4241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Honey: 0
   Nectar: 0
   bee: {fileID: 4805415210957980398, guid: 8e983087f9198044a90ee6bbb5c1972f, type: 3}
   totalBees: 0
-  requiredNectar: 0
   enemyHealth: 0
+  storedBees: 0
 --- !u!136 &1788990452970430818
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -113,7 +114,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5434408
-  m_Height: 2.2
+  m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2668989834728691356

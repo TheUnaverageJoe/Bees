@@ -22,7 +22,7 @@ public class FlowerSpawner : MonoBehaviour
     GameObject createFlower() {
         Debug.Log("Flower Spawn called");
         Quaternion rotation = Quaternion.AngleAxis(Random.Range(-90f, 90f), Vector3.up);
-        spawnPoint.x = Random.Range (-68f, 85);
+        spawnPoint.x = Random.Range (-68f, 80);
         spawnPoint.y = 0.35f;
         spawnPoint.z = Random.Range(-75f, 35f);
         
