@@ -8,12 +8,15 @@ public class HiveBehavior : MonoBehaviour
     public float Honey;
     public float Nectar;
     public GameObject bee;
-    private GameObject[] Bees;
+
+    //unused variable
+    //private GameObject[] Bees;
     public Queue<GameObject> BeeQueue;
     public int totalBees;
     public const float REQUIRED_NECTAR_FOR_BEE = 20;
     //nice and simple numba 1
     public const float REQUIRED_HONEY_FOR_BEE = 1;
+    private const int STARTING_NUM_BEES = 10;
     public int enemyHealth, storedBees;
     private int createdBeesCounter;
 
@@ -34,18 +37,18 @@ public class HiveBehavior : MonoBehaviour
         //bee = GameObject.FindGameObjectWithTag("Bee");
         BeeQueue = new Queue<GameObject>();
         
-        for (int i = 0; i < totalBees; i++) {
+        for (int i = 0; i < STARTING_NUM_BEES; i++) {
             GameObject larva = createBee();
             larva.name = "Bee " + createdBeesCounter.ToString();
             createdBeesCounter++;
-            storedBees++;
+            //storedBees++;
             //BeeQueue.Enqueue(larva);
             //Debug.Log(larva.GetInstanceID());
         }
 
         //-------------------------------------------------------------
 
-        Bees = GameObject.FindGameObjectsWithTag("Bee");
+        //Bees = GameObject.FindGameObjectsWithTag("Bee");
         //test for future in case we need to dynamically resize Bees array capacity
         //GameObject[] temp = new GameObject[Bees.Length*2];
         
@@ -96,9 +99,9 @@ public class HiveBehavior : MonoBehaviour
     //       true if command executed
     //       return false if no bees in hive
     public bool deployNBees(int n) {
-        if (BeeQueue.Count == 0 || BeeQueue.Count < n) return false;
+        if (storedBees == 0 || storedBees < n) return false;
         for (int i = 0; i < n; i++) {
-            createBee();
+            bee = createBee();
             bee.GetComponent<BeeBehavior>().recieveSignal(0);
         }
         return true;

@@ -7,10 +7,12 @@ public class BeeBehavior : MonoBehaviour
     NavMeshAgent agent;
     GameObject currentTarget, hive, currentFlower;
     public bool foundFlower, isExploring, goingHome, atTarget;
-    public float nectar, rotateChance, rotateAmount;
+    public float nectar, rotateChance, rotateAmount, lifeSpan;
     HiveBehavior hiveScript;
     //MAX_NECTAR is 50 because its approx 50mg of nectar
     private const float MAX_NECTAR = 50;
+    //life span is == 2 minutes: 50 ticks per sec, 60 sec per min
+    private const float MAX_LIFESPAN = 6000;
 
 
     // NOTE: here we potentially include "Boid" behavior
@@ -33,6 +35,7 @@ public class BeeBehavior : MonoBehaviour
         atTarget = false;
 
         nectar = 0;
+        lifeSpan = 0;
 
         currentTarget = null;
     }
@@ -89,6 +92,14 @@ public class BeeBehavior : MonoBehaviour
         }
     }
 
+    void FixedUpdate(){
+        lifeSpan++;
+        if(lifeSpan >= MAX_LIFESPAN){
+            Debug.Log("Bee died of old age");
+            Destroy(this.gameObject);
+        }
+    }
+
     // neutralState()
     // Reset all state values to neutral (AKA bee spawns in hive)
     public void neutralState() {
@@ -140,12 +151,14 @@ public class BeeBehavior : MonoBehaviour
 
     public void foundFlowerFunc(GameObject flower){
         //Debug.Log("foundFlowerFunc was called");
-        foundFlower = true;
-        goingHome = false;
-        atTarget = false;
-        isExploring = false;
-        currentFlower = flower;
-        currentTarget = flower;
+        if(!foundFlower){
+            foundFlower = true;
+            goingHome = false;
+            atTarget = false;
+            isExploring = false;
+            currentFlower = flower;
+            currentTarget = flower;
+        }
     }
 
     private void OnCollisionEnter(Collision other) {
