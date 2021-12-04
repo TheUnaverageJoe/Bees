@@ -45,7 +45,7 @@ public class BeeBehavior : MonoBehaviour
             agent.SetDestination(currentTarget.transform.position);
         }
         // Slurp nectar from currentFlower (AKA currentTarget)
-        if (atTarget && currentTarget.CompareTag("Flower") && nectar < MAX_NECTAR) {
+        if (atTarget && currentTarget.CompareTag("Flower") && nectar <= MAX_NECTAR) {
             if (currentTarget.GetComponent<FlowerBehavior>().suckNectar()) {
                 nectar++;
                 //Debug.Log("Nectar is: " + nectar);

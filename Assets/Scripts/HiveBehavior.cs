@@ -25,7 +25,6 @@ public class HiveBehavior : MonoBehaviour
         Nectar = 0;
         enemyHealth = 5;
 
-        totalBees = 10;
         requiredNectar = 20;
         createdBeesCounter = 0;
 
