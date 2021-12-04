@@ -32,14 +32,16 @@ public class ButtonFunctionScript : MonoBehaviour
     }
 
     public void deployButton() {
-        float bees = hiveScript.BeeQueue.Count;
+        float bees = hiveScript.storedBees;
         float percent = slider.GetComponent<Slider>().value;
         int totalValue = (int)(bees*percent);
         hiveScript.deployNBees(totalValue);
+        Debug.Log("deployed");
     }
 
     public void createButton() {
         hiveScript.produceBee();
+        Debug.Log("create Bee");
     }
 
     public void giveButton() {

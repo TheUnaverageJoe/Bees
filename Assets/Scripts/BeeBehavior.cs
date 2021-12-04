@@ -6,7 +6,8 @@ public class BeeBehavior : MonoBehaviour
 {
     NavMeshAgent agent;
     GameObject currentTarget, hive, currentFlower;
-    public bool foundFlower, isExploring, goingHome, atTarget;
+    public bool foundFlower, isExploring, goingHome, atTarget, 
+                nectarCollectionAvalible;
     public float nectar, rotateChance, rotateAmount, lifeSpan;
     HiveBehavior hiveScript;
     //MAX_NECTAR is 50 because its approx 50mg of nectar
@@ -36,6 +37,7 @@ public class BeeBehavior : MonoBehaviour
 
         nectar = 0;
         lifeSpan = 0;
+        nectarCollectionAvalible = true;
 
         currentTarget = null;
     }
@@ -53,7 +55,9 @@ public class BeeBehavior : MonoBehaviour
             agent.SetDestination(currentTarget.transform.position);
         }
         // Slurp nectar from currentFlower (AKA currentTarget)
-        if (atTarget && currentTarget != null && currentTarget.CompareTag("Flower") && nectar < MAX_NECTAR) {
+        if (atTarget && currentTarget != null && currentTarget.CompareTag("Flower") &&
+            nectar < MAX_NECTAR && nectarCollectionAvalible) {
+            StartCoroutine(nectarSuckTimer());
             if (currentTarget.GetComponent<FlowerBehavior>().suckNectar()) {
                 nectar++;
                 //Debug.Log("Nectar is: " + nectar);
@@ -176,11 +180,17 @@ public class BeeBehavior : MonoBehaviour
             atTarget = true;
         }
         if (other.gameObject.CompareTag("Flower")) {
-            //isExploring = false;
+            isExploring = false;
             foundFlower = false;
             atTarget = true;
             //currentTarget = other.gameObject;
             //currentFlower = other.gameObject;
         }
+    }
+
+    IEnumerator nectarSuckTimer(){
+        nectarCollectionAvalible = false;
+        yield return new WaitForSeconds(1);
+        nectarCollectionAvalible = true;
     }
 }
