@@ -8,7 +8,11 @@ public class BeeBehavior : MonoBehaviour
     GameObject currentTarget, hive, currentFlower;
     public bool foundFlower, isExploring, goingHome, atTarget;
     public float nectar, rotateChance, rotateAmount;
-    private const float MAX_NECTAR = 5;
+    HiveBehavior hiveScript;
+    //MAX_NECTAR is 50 because its approx 50mg of nectar
+    private const float MAX_NECTAR = 50;
+
+
     // NOTE: here we potentially include "Boid" behavior
     //       and check other bees in our radius to prevent
     //       collision and simulate a swarm
@@ -18,8 +22,10 @@ public class BeeBehavior : MonoBehaviour
     {
         // Bee is at hive
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = 1;
-        Debug.Log(agent.isOnNavMesh);
+        hive = GameObject.FindGameObjectWithTag("Hive");
+        hiveScript = hive.GetComponent<HiveBehavior>();
+        agent.speed = 3;
+        //Debug.Log(agent.isOnNavMesh);
 
         foundFlower = false;
         isExploring = true;
@@ -29,7 +35,6 @@ public class BeeBehavior : MonoBehaviour
         nectar = 0;
 
         currentTarget = null;
-        hive = GameObject.FindGameObjectWithTag("Hive");
     }
 
     // Update is called once per frame
@@ -41,14 +46,14 @@ public class BeeBehavior : MonoBehaviour
         // Go to target
         if (currentTarget != null && !atTarget) {
 
-            Debug.Log("Has a Target" + currentTarget.transform.position + GetInstanceID());
+            //Debug.Log("Has a Target" + currentTarget.transform.position + GetInstanceID());
             agent.SetDestination(currentTarget.transform.position);
         }
         // Slurp nectar from currentFlower (AKA currentTarget)
-        if (atTarget && currentTarget.CompareTag("Flower") && nectar < MAX_NECTAR) {
+        if (atTarget && currentTarget != null && currentTarget.CompareTag("Flower") && nectar < MAX_NECTAR) {
             if (currentTarget.GetComponent<FlowerBehavior>().suckNectar()) {
                 nectar++;
-                Debug.Log("Nectar is: " + nectar);
+                //Debug.Log("Nectar is: " + nectar);
             } else {
                 isExploring = true;
                 foundFlower = false;
@@ -75,10 +80,10 @@ public class BeeBehavior : MonoBehaviour
         // Impliment:
         // isExploring pathfinding
         if(isExploring){
-            Debug.Log("Should be exploring");
+            //Debug.Log("Should be exploring");
             agent.SetDestination(transform.position+transform.forward);
             if(rotateChance < 0.05f){
-                Debug.Log("Rotated");
+                //Debug.Log("Rotated");
                 transform.RotateAround(transform.position, Vector3.up, rotateAmount);
             }
         }
@@ -136,6 +141,8 @@ public class BeeBehavior : MonoBehaviour
     public void foundFlowerFunc(GameObject flower){
         //Debug.Log("foundFlowerFunc was called");
         foundFlower = true;
+        goingHome = false;
+        atTarget = false;
         isExploring = false;
         currentFlower = flower;
         currentTarget = flower;
@@ -143,16 +150,24 @@ public class BeeBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         Debug.Log("Bee hit something physically");
-        if (other.gameObject.CompareTag("Hive")) {
+        if (other.gameObject.CompareTag("Hive") &&
+            currentTarget!=null && currentTarget == hive) {
+
+            Debug.Log("Touched hive");
+            //GameObject child = transform.GetChild(0).gameObject;
+            //child.SetActive(false);
+            //gameObject.SetActive(false);
+            hiveScript.storedBees++;
+            Destroy(this.gameObject);
             goingHome = false;
             atTarget = true;
         }
         if (other.gameObject.CompareTag("Flower")) {
-            isExploring = false;
-            foundFlower = true;
+            //isExploring = false;
+            foundFlower = false;
             atTarget = true;
-            currentTarget = other.gameObject;
-            currentFlower = other.gameObject;
+            //currentTarget = other.gameObject;
+            //currentFlower = other.gameObject;
         }
     }
 }

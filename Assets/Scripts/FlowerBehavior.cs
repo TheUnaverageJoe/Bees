@@ -21,7 +21,7 @@ public class FlowerBehavior : MonoBehaviour
     {
         // consider frame rate and how fast bee consumes 1 nectar
         //Nectar = Random.Range(1, 5);//amount of nectar
-        Nectar = 5;
+        Nectar = Random.Range(25, 50);
         replenishTime = Random.Range(1, 3);//num of minutes till replenish
         objCollider = GetComponent<SphereCollider>();
         timer = 0;
@@ -45,7 +45,7 @@ public class FlowerBehavior : MonoBehaviour
             objCollider.enabled = true;
             depleted = false;
             hasBee = false;
-            Nectar = Random.Range(1, 5);
+            Nectar = Random.Range(25, 50);
             timer = 0;
         }
     }
@@ -65,7 +65,7 @@ public class FlowerBehavior : MonoBehaviour
             Debug.Log("Trigger went off");
             hasBee = true;
             //Debug.Log(suckNectar());
-            Debug.Log(Nectar);
+            //Debug.Log(Nectar);
             //send signal to bee
              beeScript = other.gameObject.GetComponent<BeeBehavior>();
              beeScript.foundFlowerFunc(gameObject);

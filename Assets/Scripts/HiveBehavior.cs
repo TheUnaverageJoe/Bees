@@ -5,14 +5,16 @@ using UnityEngine;
 public class HiveBehavior : MonoBehaviour
 {
     // Conversion 
-    private float Honey;
+    public float Honey;
     public float Nectar;
     public GameObject bee;
     private GameObject[] Bees;
     public Queue<GameObject> BeeQueue;
     public int totalBees;
-    public float requiredNectar;
-    public int enemyHealth;
+    public const float REQUIRED_NECTAR_FOR_BEE = 20;
+    //nice and simple numba 1
+    public const float REQUIRED_HONEY_FOR_BEE = 1;
+    public int enemyHealth, storedBees;
     private int createdBeesCounter;
 
 
@@ -25,9 +27,8 @@ public class HiveBehavior : MonoBehaviour
         Nectar = 0;
         enemyHealth = 5;
 
-        totalBees = 100;
-        requiredNectar = 20;
         createdBeesCounter = 0;
+        storedBees = 0;
 
         // Initialize starting 'totalBees' number of bees
         //bee = GameObject.FindGameObjectWithTag("Bee");
@@ -37,7 +38,8 @@ public class HiveBehavior : MonoBehaviour
             GameObject larva = createBee();
             larva.name = "Bee " + createdBeesCounter.ToString();
             createdBeesCounter++;
-            BeeQueue.Enqueue(larva);
+            storedBees++;
+            //BeeQueue.Enqueue(larva);
             //Debug.Log(larva.GetInstanceID());
         }
 
@@ -71,12 +73,18 @@ public class HiveBehavior : MonoBehaviour
         //If bees in hive produce honey?
         //for each bee increase rate of nectar to honey conversion
         //if(BeeQueue.)
-        if (Nectar >= 0 && BeeQueue.Count > 0) {
-            Nectar -= BeeQueue.Count;
+
+        if (Nectar >= storedBees*50 && storedBees > 0) {
+            Nectar -= storedBees*50;
+            Honey += (storedBees);
+            
+        }
+        if(Honey >= REQUIRED_HONEY_FOR_BEE){
+            produceBee();
         }
         // From research: it requires nectar from 2 million flowers for
         //  1 lb of honey. That conversion rate is crazy small
-        Honey += (BeeQueue.Count * 0.012f);
+        
     }
 
     // deployNBees()
@@ -90,7 +98,7 @@ public class HiveBehavior : MonoBehaviour
     public bool deployNBees(int n) {
         if (BeeQueue.Count == 0 || BeeQueue.Count < n) return false;
         for (int i = 0; i < n; i++) {
-            bee = BeeQueue.Dequeue();
+            createBee();
             bee.GetComponent<BeeBehavior>().recieveSignal(0);
         }
         return true;
@@ -107,11 +115,12 @@ public class HiveBehavior : MonoBehaviour
 
     // produceBee()
     // Based on a max amount of nectar, create a new bee in the hive
-    public bool produceBee() {
-        if (Nectar < requiredNectar) return false;
-        totalBees += 1;
-        Nectar -= requiredNectar;
-        BeeQueue.Enqueue(createBee());
+    bool produceBee() {
+        if (Nectar < REQUIRED_NECTAR_FOR_BEE || Honey < 1) return false;
+        storedBees += 1;
+        Nectar -= REQUIRED_NECTAR_FOR_BEE;
+        Honey -= REQUIRED_HONEY_FOR_BEE;
+        //BeeQueue.Enqueue(createBee());
         return true;
     }
 
@@ -136,10 +145,12 @@ public class HiveBehavior : MonoBehaviour
         //return ref clone;
     }
 
-    private void OnCollision(GameObject other) {
+    private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Bee")) {
-            Nectar += other.GetComponent<BeeBehavior>().dropOffNectar();
-            BeeQueue.Enqueue(other);
+            //storedBees++;
+            //Debug.Log("storedBees: " + storedBees);
+            Nectar += other.gameObject.GetComponent<BeeBehavior>().dropOffNectar();
+            //BeeQueue.Enqueue(other.gameObject);
         }
     }
 }
