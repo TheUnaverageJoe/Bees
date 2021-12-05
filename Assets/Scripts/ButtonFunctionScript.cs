@@ -8,12 +8,14 @@ public class ButtonFunctionScript : MonoBehaviour
     public GameObject hive;
     public HiveBehavior hiveScript;
     public GameObject slider;
+    public GameObject pButton;
     // Start is called before the first frame update
     void Start()
     {
         hive = GameObject.Find ("PolyHive (1)");
         hiveScript = hive.GetComponent <HiveBehavior>();
         slider = GameObject.Find ("UISlider");
+        pButton = GameObject.Find ("ProduceButton");
     }
 
     // Update is called once per frame
@@ -40,12 +42,22 @@ public class ButtonFunctionScript : MonoBehaviour
     }
 
     public void createButton() {
-        hiveScript.createBee();
+        hiveScript.produceBee();
         //hiveScript.produceBee();
-        Debug.Log("create Bee");
+        Debug.Log("produce Bee");
+    }
+
+    public void produceButton() {
+        Debug.Log("we good");
+        if (pButton.GetComponentInChildren<Text>().text == "Make Honey") {
+            pButton.GetComponentInChildren<Text>().text = "Stop Honey";
+        }else{
+            pButton.GetComponentInChildren<Text>().text = "Make Honey";
+        }
     }
 
     public void giveButton() {
-        hiveScript.Nectar += 5;
+        hiveScript.Nectar += 20;
+        hiveScript.Honey += 1;
     }
 }
