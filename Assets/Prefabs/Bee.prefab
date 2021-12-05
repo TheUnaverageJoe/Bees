@@ -2190,9 +2190,13 @@ MonoBehaviour:
   isExploring: 0
   goingHome: 0
   atTarget: 0
+  nectarCollectionAvalible: 0
+  isEffectPlaying: 0
   nectar: 0
   rotateChance: 0
   rotateAmount: 0
+  lifeSpan: 0
+  pickupEffect: {fileID: 4707665838327418370, guid: 0e3aa10072b5823409491ec215d87d05, type: 3}
 --- !u!195 &4805415210957980385
 NavMeshAgent:
   m_ObjectHideFlags: 0

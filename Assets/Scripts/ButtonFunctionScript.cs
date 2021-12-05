@@ -18,6 +18,10 @@ public class ButtonFunctionScript : MonoBehaviour
         pButton = GameObject.Find ("ProduceButton");
     }
 
+    void Update(){
+        
+    }
+
     public void QuitGame(){
         Application.Quit();
         Debug.Log("Game is exiting");

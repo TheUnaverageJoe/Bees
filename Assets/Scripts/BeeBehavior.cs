@@ -7,7 +7,7 @@ public class BeeBehavior : MonoBehaviour
     NavMeshAgent agent;
     GameObject currentTarget, hive, currentFlower;
     public bool foundFlower, isExploring, goingHome, atTarget, 
-                nectarCollectionAvalible;
+                nectarCollectionAvalible, isEffectPlaying;
     public float nectar, rotateChance, rotateAmount, lifeSpan;
     HiveBehavior hiveScript;
     //MAX_NECTAR is 50 because its approx 50mg of nectar
@@ -15,6 +15,8 @@ public class BeeBehavior : MonoBehaviour
     //life span is == 2 minutes: 50 ticks per sec, 60 sec per min
     //3000 = 1 sec per 3000
     private const float MAX_LIFESPAN = 18000;
+    public GameObject pickupEffect;
+    public GameObject effect;
 
 
     // NOTE: here we potentially include "Boid" behavior
@@ -30,11 +32,11 @@ public class BeeBehavior : MonoBehaviour
         hiveScript = hive.GetComponent<HiveBehavior>();
         agent.speed = 3;
         //Debug.Log(agent.isOnNavMesh);
-
         foundFlower = false;
         isExploring = true;
         goingHome = false;
         atTarget = false;
+        isEffectPlaying = false;
 
         nectar = 0;
         lifeSpan = 0;
@@ -77,6 +79,10 @@ public class BeeBehavior : MonoBehaviour
                 goingHome = false;
                 currentTarget = null;
                 currentFlower = null;
+                // if(isEffectPlaying == true) {
+                //     effect.SetActive(false);
+                //     isEffectPlaying = false;
+                // }
             }
         }
         // Go home
@@ -103,6 +109,7 @@ public class BeeBehavior : MonoBehaviour
         isExploring = false;
         goingHome = false;
         atTarget = false;
+        isEffectPlaying = false;
     }
 
     // recieveSignal()
@@ -175,6 +182,10 @@ public class BeeBehavior : MonoBehaviour
             isExploring = false;
             foundFlower = false;
             atTarget = true;
+            Quaternion rotation = Quaternion.AngleAxis(0f, Vector3.up);
+            effect = Instantiate(pickupEffect, transform.position, rotation);
+            effect.SetActive(true);
+            isEffectPlaying = true;
             //currentTarget = other.gameObject;
             //currentFlower = other.gameObject;
         }
@@ -184,12 +195,15 @@ public class BeeBehavior : MonoBehaviour
             atTarget = false;
             foundFlower = false;
             currentFlower = null;
+            Destroy(effect);
+            isEffectPlaying = false;
         }
     }
 
     IEnumerator nectarSuckTimer(){
         nectarCollectionAvalible = false;
         yield return new WaitForSeconds(1);
+        // isEffectPlaying = true;
         nectarCollectionAvalible = true;
     }
 }
