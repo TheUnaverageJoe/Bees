@@ -13,7 +13,8 @@ public class BeeBehavior : MonoBehaviour
     //MAX_NECTAR is 50 because its approx 50mg of nectar
     private const float MAX_NECTAR = 50;
     //life span is == 2 minutes: 50 ticks per sec, 60 sec per min
-    private const float MAX_LIFESPAN = 6000;
+    //3000 = 1 sec per 3000
+    private const float MAX_LIFESPAN = 18000;
 
 
     // NOTE: here we potentially include "Boid" behavior
@@ -74,14 +75,6 @@ public class BeeBehavior : MonoBehaviour
             atTarget = false;
             goingHome = true;
             currentTarget = hive;
-        }
-
-        // Impliment:
-        // drop off nectar at hive
-        if(goingHome && atTarget){
-            hive.GetComponent<HiveBehavior>().Nectar += nectar;
-            nectar = 0;
-            this.neutralState();
         }
 
         // Impliment:
