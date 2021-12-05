@@ -46,27 +46,37 @@ public class BeeBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rotateChance = Random.Range(0.0f, 10.0f);
-        rotateAmount = Random.Range(-20.0f, 20.0f);
-
+        if(currentTarget == null){
+            // isExploring pathfinding
+            if(isExploring){
+                rotateChance = Random.Range(0.0f, 10.0f);
+                rotateAmount = Random.Range(-20.0f, 20.0f);
+                agent.SetDestination(transform.position+transform.forward);
+                if(rotateChance < 0.05f){
+                    transform.RotateAround(transform.position, Vector3.up, rotateAmount);
+                }
+            }
+        }
         // Go to target
         if (currentTarget != null && !atTarget) {
-
             //Debug.Log("Has a Target" + currentTarget.transform.position + GetInstanceID());
             agent.SetDestination(currentTarget.transform.position);
         }
         // Slurp nectar from currentFlower (AKA currentTarget)
-        if (atTarget && currentTarget != null && currentTarget.CompareTag("Flower") &&
+        if (atTarget && currentTarget.CompareTag("Flower") &&
             nectar < MAX_NECTAR && nectarCollectionAvalible) {
             StartCoroutine(nectarSuckTimer());
             if (currentTarget.GetComponent<FlowerBehavior>().suckNectar()) {
                 nectar++;
                 //Debug.Log("Nectar is: " + nectar);
             }else{
+                Debug.Log("suckNectar() failed");
                 isExploring = true;
                 foundFlower = false;
                 atTarget = false;
                 goingHome = false;
+                currentTarget = null;
+                currentFlower = null;
             }
         }
         // Go home
@@ -75,17 +85,6 @@ public class BeeBehavior : MonoBehaviour
             atTarget = false;
             goingHome = true;
             currentTarget = hive;
-        }
-
-        // Impliment:
-        // isExploring pathfinding
-        if(isExploring){
-            //Debug.Log("Should be exploring");
-            agent.SetDestination(transform.position+transform.forward);
-            if(rotateChance < 0.05f){
-                //Debug.Log("Rotated");
-                transform.RotateAround(transform.position, Vector3.up, rotateAmount);
-            }
         }
     }
 
@@ -181,7 +180,11 @@ public class BeeBehavior : MonoBehaviour
         }
     }
     private void OnCollisionExit(Collision other){
-        atTarget = false;
+        if(other.gameObject.CompareTag("Flower")){
+            atTarget = false;
+            foundFlower = false;
+            currentFlower = null;
+        }
     }
 
     IEnumerator nectarSuckTimer(){

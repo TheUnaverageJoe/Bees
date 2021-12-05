@@ -18,12 +18,6 @@ public class ButtonFunctionScript : MonoBehaviour
         pButton = GameObject.Find ("ProduceButton");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void QuitGame(){
         Application.Quit();
         Debug.Log("Game is exiting");
@@ -43,13 +37,12 @@ public class ButtonFunctionScript : MonoBehaviour
 
     public void createButton() {
         hiveScript.produceBee();
-        //hiveScript.produceBee();
         Debug.Log("produce Bee");
     }
 
     public void produceButton() {
         hiveScript.toggleConversion();
-        Debug.Log("we good");
+        //Debug.Log("we good");
         if (pButton.GetComponentInChildren<Text>().text == "Make Honey") {
             pButton.GetComponentInChildren<Text>().text = "Stop Honey";
         }else{

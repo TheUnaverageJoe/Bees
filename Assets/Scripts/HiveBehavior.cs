@@ -80,10 +80,10 @@ public class HiveBehavior : MonoBehaviour
         //note: 50 nectar to make 1 honey
         //
         if(toggleConvert){
-            if (Nectar < 5*storedBees || storedBees <= 0) return;
+            if (Nectar < 0.1f*storedBees || storedBees <= 0) return;
             else{
-                Nectar -= storedBees*50;
-                Honey += (storedBees);
+                Nectar -= 0.1f*storedBees;
+                Honey += (0.002f*storedBees);
             }
         }
         // From research: it requires nectar from 2 million flowers for
