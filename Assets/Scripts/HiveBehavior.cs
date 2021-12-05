@@ -19,6 +19,7 @@ public class HiveBehavior : MonoBehaviour
     private const int STARTING_NUM_BEES = 10;
     public int enemyHealth, storedBees;
     private int createdBeesCounter;
+    public bool toggleConvert;
 
 
     // Start is called before the first frame update
@@ -32,6 +33,7 @@ public class HiveBehavior : MonoBehaviour
 
         createdBeesCounter = 0;
         storedBees = 0;
+        toggleConvert = false;
 
         // Initialize starting 'totalBees' number of bees
         //bee = GameObject.FindGameObjectWithTag("Bee");
@@ -75,13 +77,11 @@ public class HiveBehavior : MonoBehaviour
         //for each bee increase rate of nectar to honey conversion
         //if(BeeQueue.)
 
-        if (Nectar >= storedBees*50 && storedBees > 0) {
-            Nectar -= storedBees*50;
-            Honey += (storedBees);
-            
-        }
-        if(Honey >= REQUIRED_HONEY_FOR_BEE){
-            produceBee();
+        if(toggleConvert){
+            if (Nectar >= storedBees*50 && storedBees > 0) {
+                Nectar -= storedBees*50;
+                Honey += (storedBees);
+            }
         }
         // From research: it requires nectar from 2 million flowers for
         //  1 lb of honey. That conversion rate is crazy small
@@ -100,9 +100,9 @@ public class HiveBehavior : MonoBehaviour
         if (storedBees == 0 || storedBees < n) return false;
         for (int i = 0; i < n; i++) {
             bee = createBee();
-            storedBees-=n;
             bee.GetComponent<BeeBehavior>().recieveSignal(0);
         }
+        storedBees-=n;
         return true;
     }
 
@@ -115,10 +115,14 @@ public class HiveBehavior : MonoBehaviour
         return canDefend;
     }
 
+    public void toggleConversion(){
+            toggleConvert=!toggleConvert;
+    }
+
     // produceBee()
     // Based on a max amount of nectar, create a new bee in the hive
     public bool produceBee() {
-        if (Nectar < REQUIRED_NECTAR_FOR_BEE || Honey < 1) return false;
+        if (Nectar < REQUIRED_NECTAR_FOR_BEE || Honey < REQUIRED_HONEY_FOR_BEE) return false;
         storedBees += 1;
         Nectar -= REQUIRED_NECTAR_FOR_BEE;
         Honey -= REQUIRED_HONEY_FOR_BEE;
