@@ -62,7 +62,7 @@ public class BeeBehavior : MonoBehaviour
             if (currentTarget.GetComponent<FlowerBehavior>().suckNectar()) {
                 nectar++;
                 //Debug.Log("Nectar is: " + nectar);
-            } else {
+            }else{
                 isExploring = true;
                 foundFlower = false;
                 atTarget = false;
@@ -129,6 +129,7 @@ public class BeeBehavior : MonoBehaviour
             goingHome = true;
             currentTarget = hive;
             atTarget = false;
+            isExploring = false;
 
             return true;
         }
@@ -159,10 +160,9 @@ public class BeeBehavior : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other) {
+        if(currentTarget == null) return;
         Debug.Log("Bee hit something physically");
-        if (other.gameObject.CompareTag("Hive") &&
-            currentTarget!=null && currentTarget == hive) {
-
+        if (other.gameObject.CompareTag("Hive") && currentTarget == hive) {
             Debug.Log("Touched hive");
             //GameObject child = transform.GetChild(0).gameObject;
             //child.SetActive(false);
@@ -172,13 +172,16 @@ public class BeeBehavior : MonoBehaviour
             goingHome = false;
             atTarget = true;
         }
-        if (other.gameObject.CompareTag("Flower") && currentTarget.CompareTag("Flower")) {
+        if(other.gameObject.CompareTag("Flower") && currentTarget.CompareTag("Flower")) {
             isExploring = false;
             foundFlower = false;
             atTarget = true;
             //currentTarget = other.gameObject;
             //currentFlower = other.gameObject;
         }
+    }
+    private void OnCollisionExit(Collision other){
+        atTarget = false;
     }
 
     IEnumerator nectarSuckTimer(){

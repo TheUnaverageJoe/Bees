@@ -75,10 +75,13 @@ public class HiveBehavior : MonoBehaviour
         //Does hive produce honey or bees?
         //If bees in hive produce honey?
         //for each bee increase rate of nectar to honey conversion
-        //if(BeeQueue.)
+        //toggleCovert set with UI button toggle
 
+        //note: 50 nectar to make 1 honey
+        //
         if(toggleConvert){
-            if (Nectar >= storedBees*50 && storedBees > 0) {
+            if (Nectar < 5*storedBees || storedBees <= 0) return;
+            else{
                 Nectar -= storedBees*50;
                 Honey += (storedBees);
             }
@@ -115,6 +118,9 @@ public class HiveBehavior : MonoBehaviour
         return canDefend;
     }
 
+    //toggleConversion is an avalible function
+    //to enable and disable the ability to convert nectar into honey
+    // at some fixed rate, see FixedUpdate() above
     public void toggleConversion(){
             toggleConvert=!toggleConvert;
     }

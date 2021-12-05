@@ -43,7 +43,6 @@ public class FlowerBehavior : MonoBehaviour
         //as nectar, timer, depleted
         if(timer >= replenishTime*60){
             objCollider.enabled = true;
-            depleted = false;
             hasBee = false;
             Nectar = Random.Range(25, 50);
             timer = 0;
@@ -53,7 +52,6 @@ public class FlowerBehavior : MonoBehaviour
     //allowed to leave a flower before flower is empty
     public bool suckNectar() {
         if (Nectar <= 0) {
-            depleted = true;
             return false;
         } else {
             Nectar--;
@@ -71,5 +69,8 @@ public class FlowerBehavior : MonoBehaviour
              beeScript.foundFlowerFunc(gameObject);
             //beeScript.sendSignal(found_a_Flower);
         }
+    }
+    private void OnCollisionExit(Collision other){
+        hasBee = false;
     }
 }
