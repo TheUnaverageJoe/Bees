@@ -39,8 +39,6 @@ public class HiveBehavior : MonoBehaviour
         
         for (int i = 0; i < STARTING_NUM_BEES; i++) {
             GameObject larva = createBee();
-            larva.name = "Bee " + createdBeesCounter.ToString();
-            createdBeesCounter++;
             //storedBees++;
             //BeeQueue.Enqueue(larva);
             //Debug.Log(larva.GetInstanceID());
@@ -102,6 +100,7 @@ public class HiveBehavior : MonoBehaviour
         if (storedBees == 0 || storedBees < n) return false;
         for (int i = 0; i < n; i++) {
             bee = createBee();
+            storedBees-=n;
             bee.GetComponent<BeeBehavior>().recieveSignal(0);
         }
         return true;
@@ -123,6 +122,7 @@ public class HiveBehavior : MonoBehaviour
         storedBees += 1;
         Nectar -= REQUIRED_NECTAR_FOR_BEE;
         Honey -= REQUIRED_HONEY_FOR_BEE;
+        Debug.Log("storedBees is: " + storedBees);
         //BeeQueue.Enqueue(createBee());
         return true;
     }
@@ -140,6 +140,8 @@ public class HiveBehavior : MonoBehaviour
             transform.position.z + Random.Range(-2f, 2f));
 
         GameObject clone = Instantiate(bee, newPosition, rotation);
+        clone.name = "Bee " + createdBeesCounter.ToString();
+        createdBeesCounter++;
         //ref GameObject toReturn = ref clone;
 
         // Set initial state

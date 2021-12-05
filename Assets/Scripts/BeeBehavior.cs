@@ -179,7 +179,7 @@ public class BeeBehavior : MonoBehaviour
             goingHome = false;
             atTarget = true;
         }
-        if (other.gameObject.CompareTag("Flower")) {
+        if (other.gameObject.CompareTag("Flower") && currentTarget.CompareTag("Flower")) {
             isExploring = false;
             foundFlower = false;
             atTarget = true;

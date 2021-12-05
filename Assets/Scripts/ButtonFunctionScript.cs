@@ -40,7 +40,8 @@ public class ButtonFunctionScript : MonoBehaviour
     }
 
     public void createButton() {
-        hiveScript.produceBee();
+        hiveScript.createBee();
+        //hiveScript.produceBee();
         Debug.Log("create Bee");
     }
 
