@@ -48,6 +48,7 @@ public class ButtonFunctionScript : MonoBehaviour
     }
 
     public void produceButton() {
+        hiveScript.toggleConversion();
         Debug.Log("we good");
         if (pButton.GetComponentInChildren<Text>().text == "Make Honey") {
             pButton.GetComponentInChildren<Text>().text = "Stop Honey";
@@ -58,6 +59,5 @@ public class ButtonFunctionScript : MonoBehaviour
 
     public void giveButton() {
         hiveScript.Nectar += 20;
-        hiveScript.Honey += 1;
     }
 }
