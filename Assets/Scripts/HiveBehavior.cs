@@ -41,7 +41,7 @@ public class HiveBehavior : MonoBehaviour
         honeyText = GameObject.Find("HoneyText");
 
         createdBeesCounter = 0;
-        storedBees = 0;
+        storedBees = 3;
         toggleConvert = false;
 
         // Initialize starting 'totalBees' number of bees
