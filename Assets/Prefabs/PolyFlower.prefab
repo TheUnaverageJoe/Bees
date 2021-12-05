@@ -114,6 +114,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Nectar: 0
+  witheredColor: {fileID: 2100000, guid: 4ff261376c529bc498861781555e37c6, type: 2}
+  ripeColor: {fileID: 2100000, guid: c43193df1015b4c4a9614ab8c6560190, type: 2}
 --- !u!54 &7192315499667933368
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -15,6 +15,9 @@ public class FlowerBehavior : MonoBehaviour
     float timer = 0;
     BeeBehavior beeScript;
     TestNavMesh beeTest;
+    Renderer changeColor;
+    public Material witheredColor;
+    public Material ripeColor;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,7 @@ public class FlowerBehavior : MonoBehaviour
         Nectar = Random.Range(25, 50);
         replenishTime = Random.Range(1, 3);//num of minutes till replenish
         objCollider = GetComponent<SphereCollider>();
+        changeColor = GetComponent<Renderer>();
         timer = 0;
         hasBee = false;
     }
@@ -42,6 +46,7 @@ public class FlowerBehavior : MonoBehaviour
         //enable the collider and reset variables such
         //as nectar, timer, depleted
         if(timer >= replenishTime*60){
+            changeColor.material = ripeColor;
             objCollider.enabled = true;
             hasBee = false;
             Nectar = Random.Range(25, 50);
@@ -52,6 +57,7 @@ public class FlowerBehavior : MonoBehaviour
     //allowed to leave a flower before flower is empty
     public bool suckNectar() {
         if (Nectar <= 0) {
+            changeColor.material = witheredColor;
             return false;
         } else {
             Nectar--;
