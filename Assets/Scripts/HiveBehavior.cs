@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HiveBehavior : MonoBehaviour
 {
@@ -21,6 +22,10 @@ public class HiveBehavior : MonoBehaviour
     private int createdBeesCounter;
     public bool toggleConvert;
 
+    public GameObject beesText;
+    public GameObject nectarText;
+    public GameObject honeyText;
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +35,10 @@ public class HiveBehavior : MonoBehaviour
         Honey = 0;
         Nectar = 0;
         enemyHealth = 5;
+
+        beesText = GameObject.Find("BeesText");
+        nectarText = GameObject.Find("NectarText");
+        honeyText = GameObject.Find("HoneyText");
 
         createdBeesCounter = 0;
         storedBees = 0;
@@ -88,7 +97,10 @@ public class HiveBehavior : MonoBehaviour
         }
         // From research: it requires nectar from 2 million flowers for
         //  1 lb of honey. That conversion rate is crazy small
-        
+
+        beesText.GetComponent<Text>().text = storedBees.ToString();
+        nectarText.GetComponent<Text>().text = Nectar.ToString();
+        honeyText.GetComponent<Text>().text = Honey.ToString();
     }
 
     // deployNBees()
