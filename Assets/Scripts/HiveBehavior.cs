@@ -174,10 +174,7 @@ public class HiveBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Bee")) {
-            //storedBees++;
-            //Debug.Log("storedBees: " + storedBees);
             Nectar += other.gameObject.GetComponent<BeeBehavior>().dropOffNectar();
-            //BeeQueue.Enqueue(other.gameObject);
         }
     }
 }

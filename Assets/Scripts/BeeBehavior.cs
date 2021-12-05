@@ -95,6 +95,11 @@ public class BeeBehavior : MonoBehaviour
     }
 
     void FixedUpdate(){
+        //float fixedDistance = 70;
+        if(transform.position.x < -68f || transform.position.x > 80f ||
+            transform.position.z < -75f || transform.position.z > 35f)
+            recieveSignal(1);
+
         lifeSpan++;
         if(lifeSpan >= MAX_LIFESPAN){
             Debug.Log("Bee died of old age");
