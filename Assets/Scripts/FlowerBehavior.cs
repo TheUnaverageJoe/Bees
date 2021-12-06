@@ -68,12 +68,9 @@ public class FlowerBehavior : MonoBehaviour
         if(other.gameObject.CompareTag("Bee") && !hasBee){
             Debug.Log("Trigger went off");
             hasBee = true;
-            //Debug.Log(suckNectar());
-            //Debug.Log(Nectar);
             //send signal to bee
              beeScript = other.gameObject.GetComponent<BeeBehavior>();
              beeScript.foundFlowerFunc(gameObject);
-            //beeScript.sendSignal(found_a_Flower);
         }
     }
     private void OnCollisionExit(Collision other){
