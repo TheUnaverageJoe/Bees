@@ -182,6 +182,7 @@ public class BeeBehavior : MonoBehaviour
             Destroy(this.gameObject);
             goingHome = false;
             atTarget = true;
+            isEffectPlaying = false;
         }
         if(other.gameObject.CompareTag("Flower") && currentTarget.CompareTag("Flower")) {
             isExploring = false;

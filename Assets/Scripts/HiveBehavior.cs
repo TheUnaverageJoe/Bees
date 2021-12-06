@@ -9,6 +9,7 @@ public class HiveBehavior : MonoBehaviour
     public float Honey;
     public float Nectar;
     public GameObject bee;
+    private GameObject beeSpawn;
 
     //unused variable
     //private GameObject[] Bees;
@@ -114,8 +115,8 @@ public class HiveBehavior : MonoBehaviour
     public bool deployNBees(int n) {
         if (storedBees == 0 || storedBees < n) return false;
         for (int i = 0; i < n; i++) {
-            bee = createBee();
-            bee.GetComponent<BeeBehavior>().recieveSignal(0);
+            beeSpawn = createBee();
+            beeSpawn.GetComponent<BeeBehavior>().recieveSignal(0);
         }
         storedBees-=n;
         return true;
